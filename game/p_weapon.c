@@ -831,6 +831,17 @@ void Blaster_Fire (edict_t *ent, vec3_t g_offset, int damage, qboolean hyper, in
 
 	fire_blaster (ent, start, forward, damage, 1000, effect, hyper);
 
+	start[0] += right[0] * 10;
+	start[1] += right[1] * 10;
+	start[2] += right[2] * 10;
+	fire_blaster(ent, start, forward, damage, 1000, effect, hyper);
+
+	start[0] -= right[0] * 10;
+	start[1] -= right[1] * 10;
+	start[2] -= right[2] * 10;
+	fire_blaster(ent, start, forward, damage, 1000, effect, hyper);
+
+
 	// send muzzle flash
 	gi.WriteByte (svc_muzzleflash);
 	gi.WriteShort (ent-g_edicts);
@@ -1212,7 +1223,7 @@ void weapon_shotgun_fire (edict_t *ent)
 	if (deathmatch->value)
 		fire_shotgun (ent, start, forward, damage, kick, 500, 500, DEFAULT_DEATHMATCH_SHOTGUN_COUNT, MOD_SHOTGUN);
 	else
-		fire_shotgun (ent, start, forward, damage, kick, 500, 500, DEFAULT_SHOTGUN_COUNT, MOD_SHOTGUN);
+		fire_shotgun (ent, start, forward, damage, kick * 5, 500, 500, DEFAULT_SHOTGUN_COUNT, MOD_SHOTGUN);
 
 	// send muzzle flash
 	gi.WriteByte (svc_muzzleflash);
@@ -1229,8 +1240,8 @@ void weapon_shotgun_fire (edict_t *ent)
 
 void Weapon_Shotgun (edict_t *ent)
 {
-	static int	pause_frames[]	= {22, 28, 34, 0};
-	static int	fire_frames[]	= {8, 9, 0};
+	static int	pause_frames[]	= {5, 5, 5, 0};
+	static int	fire_frames[]	= {3, 3, 0};
 
 	Weapon_Generic (ent, 7, 18, 36, 39, pause_frames, fire_frames, weapon_shotgun_fire);
 }
