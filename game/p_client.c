@@ -875,6 +875,39 @@ Chooses a player start, deathmatch start, coop start, etc
 void	SelectSpawnPoint (edict_t *ent, vec3_t origin, vec3_t angles)
 {
 	edict_t	*spot = NULL;
+	int index = ent->client - game.clients;
+
+	if (deathmatch->value && !Q_stricmp(level.mapname, "q2dm1"))
+	{
+		if (index == 0)   // Player 1
+		{
+			origin[0] = 1888;
+			origin[1] = 1018;
+			origin[2] = 1070;
+			angles[0] = 0;
+			angles[1] = -90;
+			angles[2] = 0;
+
+			gi.dprintf("P1 ORIGIN SET TO: %.1f %.1f %.1f | ANGLES: %.1f %.1f %.1f\n",
+				origin[0], origin[1], origin[2], angles[0], angles[1], angles[2]);
+
+			return;
+		}
+		else if (index == 1)   // Player 2
+		{
+			origin[0] = 1892;
+			origin[1] = 833;
+			origin[2] = 1070;
+			angles[0] = 0;
+			angles[1] = 90;
+			angles[2] = 0;
+
+			gi.dprintf("P2 ORIGIN SET TO: %.1f %.1f %.1f | ANGLES: %.1f %.1f %.1f\n",
+				origin[0], origin[1], origin[2], angles[0], angles[1], angles[2]);
+
+			return;
+		}
+	}
 
 	if (deathmatch->value)
 		spot = SelectDeathmatchSpawnPoint ();
